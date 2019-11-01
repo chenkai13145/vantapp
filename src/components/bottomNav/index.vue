@@ -1,6 +1,6 @@
 <template>
   <van-tabbar v-model="active">
-    <van-tabbar-item icon="home-o" @click.native="toSwich('/home')">首页</van-tabbar-item>
+    <van-tabbar-item icon="home-o" @click.native="toSwich('/home')">{{$store.getters.type==='shangjia'?'订单列表':'首页'}}</van-tabbar-item>
     <van-tabbar-item  @click.native="toSwich('/home')">
            <div class="jia">
              +

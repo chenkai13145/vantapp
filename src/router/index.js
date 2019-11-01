@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import user from '../store/module/user'
 
 Vue.use(Router)
 
@@ -14,10 +15,19 @@ const arrRoutes=[
     {
       path: '/regester',
       name: 'regester',
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ '../views/loginReg/regester')
+
+      component: () => import('../views/loginReg/regester')
+    },
+    {
+      path: '/putme',
+      name: 'putme',
+
+      component: () => import('../views/me/putme')
+    },
+    {
+      path: '/fubu',
+      name: 'fubu',
+      component: ()=>import('../views/me/fubu')
     },
     {
       path: '/',
@@ -35,12 +45,29 @@ const arrRoutes=[
           name: 'me',
           component: ()=>import('../views/me/me')
         },
+        {
+          path: '/history',
+          name: 'history',
+          component: ()=>import('../views/me/history')
+        },
       ]
     },
-  ]
+]
 
-  export default new Router({
-    mode: 'history',
-    base: process.env.BASE_URL,
+
+ const router=new Router({
+    mode:'hash',
     routes:arrRoutes
   })
+router.beforeEach((to,from,next)=>{
+    // console.log(store.getters.token)
+  //  if(to.path!='/login')next('/login')
+  if(to.path!='/login'&&!localStorage.getItem('user')){
+    next('/login')
+  }else{
+    next()
+  }
+})
+export default router;
+
+
